@@ -12,7 +12,7 @@ using Proy.Infrastructure.DataBase.EntityFramework.Context;
 namespace Proy.Infrastructure.Database.EntityFramework.migrations
 {
     [DbContext(typeof(ProyDbContext))]
-    [Migration("20250308050117_Initial")]
+    [Migration("20250308064517_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -181,6 +181,9 @@ namespace Proy.Infrastructure.Database.EntityFramework.migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<int>("LastModifiedBy")
                         .HasColumnType("int");

@@ -179,6 +179,9 @@ namespace Proy.Infrastructure.Database.EntityFramework.migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("LastModifiedBy")
                         .HasColumnType("int");
 

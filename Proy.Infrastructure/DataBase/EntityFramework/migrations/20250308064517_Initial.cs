@@ -65,6 +65,7 @@ namespace Proy.Infrastructure.Database.EntityFramework.migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Email = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedBy = table.Column<int>(type: "int", nullable: false),
                     LastModifiedByAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),

@@ -21,6 +21,7 @@ builder.Services
     .RegisterDataBase(builder.Configuration)
     .RegisterRepositories()
     .RegisterServices()
+    .RegisterProviders()
     .RegisterLibraries();
 
 var app = builder.Build();
