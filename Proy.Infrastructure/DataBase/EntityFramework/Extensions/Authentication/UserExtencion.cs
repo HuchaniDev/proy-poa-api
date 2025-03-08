@@ -17,7 +17,7 @@ public static class UserExtencion
         };
     }
     
-    public static UserModel ToModel(this UserEntity user)
+    public static UserModel? ToModel(this UserEntity user)
     {
         return new UserModel
         (

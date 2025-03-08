@@ -26,7 +26,7 @@ public static class UserEndpoints
         //
         app.MapPost("/", async (UserService userService, UserModel user) =>
         {
-            var result = await userService.CreateUserAsync(user);
+            var result = await userService.SaveUserAsync(user);
             return Results.Json(result,statusCode:(int)result.StatusCode);
         });
         //

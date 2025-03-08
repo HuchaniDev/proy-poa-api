@@ -16,19 +16,40 @@ public class UserRepository: GenericRepository<UserEntity>,IUserRepository
         _dbContext = dbContext;
     }
 
-    public Task<UserModel> SaveAsync(UserModel model)
+    public async Task<UserModel?> SaveAsync(UserModel model)
     {
-        if (model.Id == 0)
+        try
         {
-            var newEntity = model.ToEntity();
-            return Task.FromResult(base.SaveAsync(newEntity).Result.ToModel());
+            if (model.Id == 0)
+            {
+                var newEntity = await base.SaveAsync(model.ToEntity());
+                return newEntity.ToModel();
+            }
+            var entity = await UpdateAsync(model.ToEntity());
+            return entity.ToModel();
+
         }
-        var entity = model.ToEntity();
-        return Task.FromResult(UpdateAsync(entity).Result.ToModel());
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
     }
 
     public Task<UserModel?> GetByIdAsync(int id)
     {
         throw new NotImplementedException();
+    }
+
+    public Task<bool> IsUsedEmail(string email)
+    {
+        var isUsed = _dbContext.Users.Any(x => x.Email == email);
+        return Task.FromResult(isUsed);
+    }
+
+    public Task<bool> IsUsedUsername(string username)
+    {
+        var isUsed = _dbContext.Users.Any(x => x.Username == username);
+        return Task.FromResult(isUsed);
     }
 }

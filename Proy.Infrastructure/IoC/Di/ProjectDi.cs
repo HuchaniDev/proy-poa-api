@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Proy.Application.Services.Authentication;
+using Proy.Application.Services.Security;
 using Proy.Domain.Models.Authentication;
 using Proy.Domain.Repositories.Authentication;
 using Proy.Infrastructure.DataBase.EntityFramework.Context;
@@ -31,7 +32,8 @@ public static class ProjectDi
 
     public static IServiceCollection RegisterProviders(this IServiceCollection collection)
     {
-        collection.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
+        //collection.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
+        collection.AddSingleton<PasswordHasherService>();
         return collection;
     }
     
