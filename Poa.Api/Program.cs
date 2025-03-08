@@ -1,44 +1,49 @@
+using Poa.Api.Endpoints;
+using Poa.Api.Middleware;
+using Proy.Infrastructure.IoC.Di;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CORSPolicy",
+        b => b
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()
+            .SetIsOriginAllowed((hosts) => true));
+});
+
+builder.Services
+    .RegisterDataBase(builder.Configuration)
+    .RegisterRepositories()
+    .RegisterServices()
+    .RegisterLibraries();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+app.UseCors("CORSPolicy");
+app.UseMiddleware<MiddlewareException>();
+app.UseMiddleware<NotFoundMiddleware>();
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "APIS SUINT-ACADEMIC V.1.0");
+    c.RoutePrefix = "swagger";
+    c.EnableFilter();
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+//add endpoints
+app.MapUserEndpoints();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
