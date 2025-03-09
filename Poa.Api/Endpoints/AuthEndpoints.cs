@@ -19,7 +19,7 @@ public static class AuthEndpoints
                 var result = await authService.AuthenticateAsync(dto);
                 return Results.Json(result, statusCode: (int)result.StatusCode);
             }
-        );
+        ).AllowAnonymous();
 
         // routes.MapPost(
         //     "/register",

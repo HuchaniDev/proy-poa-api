@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Proy.Application.Services.Authentication;
 using Proy.Domain.Models.Authentication;
+using Poa.Api.Middleware;
 
 namespace Poa.Api.Endpoints;
 
@@ -15,11 +15,14 @@ public static class UserEndpoints
     internal static void MapGroupUsers(this RouteGroupBuilder app)
     {
         app.MapGet("/", async (UserService userService) =>
-        {
-            var result = await userService.GetAllAsync();
-            return Results.Json(result,statusCode:(int)result.StatusCode);
-        })
-        .RequireAuthorization(new AuthorizeAttribute{Roles = "Admin"});
+            {
+                var result = await userService.GetAllAsync();
+                return Results.Json(result, statusCode: (int)result.StatusCode);
+            })
+            .RequireAuthorization()
+            .RequireRoles("Admin")
+            .RequirePermissions("read");
+
         
         app.MapPost("/", async (UserService userService, UserModel user) =>
         {

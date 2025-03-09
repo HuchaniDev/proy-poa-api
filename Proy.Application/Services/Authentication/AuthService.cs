@@ -28,8 +28,9 @@ public class AuthService
             return Result<string>.Failure(new List<string> { "Credenciales inválidas" }, HttpStatusCode.Unauthorized);
         }
 
-        var roles = await _userRepository.GetRolesAsync(user.Id); 
-        var token = _tokenService.GenerateToken(user, roles);
+        
+        //var roles = await _userRepository.GetRolesAsync(user.Id); 
+        var token = _tokenService.GenerateToken(user);
         
         return Result<string>.Success(token, HttpStatusCode.OK);
     }

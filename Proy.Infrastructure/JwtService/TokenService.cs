@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Proy.Domain.Dtos.Authentication;
 using Proy.Domain.JwtService;
 using Proy.Domain.Models.Authentication;
 using Proy.Infrastructure.DataBase.EntityFramework.Entities.Authentication;
@@ -20,17 +21,22 @@ public class TokenService:ITokenService
         _jwtSecret = _configuration["JwtSettings:SecretKey"];
     }
 
-    public string GenerateToken(UserModel user, IList<string> roles)
+    public string GenerateToken(UserRolesPermission user)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Name, user.UserName),
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
         };
 
-        foreach (var role in roles)
+        foreach (var role in user.Roles)
         {
             claims.Add(new Claim(ClaimTypes.Role, role));
+        }
+        
+        foreach (var permission in user.Roles)
+        {
+            claims.Add(new Claim("permission", permission));
         }
         
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSecret));

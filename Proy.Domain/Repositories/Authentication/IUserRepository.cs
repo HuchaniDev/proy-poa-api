@@ -8,8 +8,8 @@ public interface IUserRepository: IGenericRepository<UserModel>
 {
     Task<List<UserDetailDto>>GetAllAsync();
     Task<UserModel?>GetByEmail(string email);
-    Task<UserModel?>GetByUsername(string username);
-    Task<List<string>>GetRolesAsync(int UserId);
+    Task<UserRolesPermission?>GetByUsername(string username);
+    //Task<List<string>>GetRolesAsync(int UserId);
     Task<bool>ChangeStatusActiveAsync(int id, bool status);
     Task<bool>ChangePasswordAsync(int id, string newPassword);
     

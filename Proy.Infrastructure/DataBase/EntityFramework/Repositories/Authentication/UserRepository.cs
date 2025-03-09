@@ -69,10 +69,22 @@ public class UserRepository: GenericRepository<UserEntity>,IUserRepository
         return Task.FromResult(user?.ToModel());
     }
 
-    public Task<UserModel?> GetByUsername(string username)
+    public Task<UserRolesPermission?> GetByUsername(string username)
     {
-        var user = _dbContext.Users.AsNoTracking().FirstOrDefault(x => x.Username == username);
-        return Task.FromResult(user?.ToModel());
+        var user = _dbContext.Users
+            .Select(u => new UserRolesPermission(
+                u.Id,
+                u.Username,
+                u.PasswordHash,
+                u.UserRoles.Select(ur => ur.Role.Name).ToList(),
+                u.UserRoles
+                    .SelectMany(ur => ur.Role.RolePermissions)
+                    .Select(rp => rp.Permission.Name)
+                    .Distinct()
+                    .ToList()
+            ))
+            .FirstOrDefaultAsync();
+        return user;
     }
 
     public Task<List<string>> GetRolesAsync(int UserId)

@@ -1,8 +1,9 @@
-﻿using Proy.Domain.Models.Authentication;
+﻿using Proy.Domain.Dtos.Authentication;
+using Proy.Domain.Models.Authentication;
 
 namespace Proy.Domain.JwtService;
 
 public interface ITokenService
 {
-    string GenerateToken(UserModel user,IList<string> roles);
+    string GenerateToken(UserRolesPermission userRolesPermission);
 }
