@@ -1,4 +1,5 @@
-﻿using Proy.Application.Services.Authentication;
+﻿using Microsoft.AspNetCore.Mvc;
+using Proy.Application.Services.Authentication;
 using Proy.Domain.Models.Authentication;
 
 namespace Poa.Api.Endpoints;
@@ -12,12 +13,12 @@ public static class UserEndpoints
     
     internal static void MapGroupUsers(this RouteGroupBuilder app)
     {
-        // app.MapGet("/", async (UserService userService) =>
-        // {
-        //     var users = await userService.GetUsersAsync();
-        //     return Results.Ok(users);
-        // });
-        //
+        app.MapGet("/", async (UserService userService) =>
+        {
+            var result = await userService.GetAllAsync();
+            return Results.Json(result,statusCode:(int)result.StatusCode);
+        });
+        
         // app.MapGet("/{id}", async (UserService userService, int id) =>
         // {
         //     var user = await userService.GetUserAsync(id);
@@ -29,17 +30,23 @@ public static class UserEndpoints
             var result = await userService.SaveUserAsync(user);
             return Results.Json(result,statusCode:(int)result.StatusCode);
         });
-        //
-        // app.MapPut("/{id}", async (UserService userService, int id, User user) =>
-        // {
-        //     var updated = await userService.UpdateUserAsync(id, user);
-        //     return updated ? Results.NoContent() : Results.NotFound();
-        // });
-        //
-        // app.MapDelete("/{id}", async (UserService userService, int id) =>
-        // {
-        //     var deleted = await userService.DeleteUserAsync(id);
-        //     return deleted ? Results.NoContent() : Results.NotFound();
-        // });
+        
+        app.MapPut("change-status/{id}", async ([FromBody]bool status, UserService userService, int id ) =>
+        {
+            var result = await userService.ChangeStatusActive(id, status);
+            return Results.Json(result,statusCode:(int)result.StatusCode);
+        });
+        
+        app.MapPut("change-password/{id}", async ([FromBody]string password, UserService userService, int id ) =>
+        {
+            var result = await userService.ChangePassword(id, password);
+            return Results.Json(result,statusCode:(int)result.StatusCode);
+        });
+        
+        app.MapDelete("/{id}", async (UserService userService, int id) =>
+        {
+            var result = await userService.DeleteAsync(id);
+            return Results.Json(result,statusCode:(int)result.StatusCode);
+        });
     }
 }

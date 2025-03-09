@@ -1,4 +1,5 @@
-﻿using Proy.Domain.Models.Authentication;
+﻿using Proy.Domain.Dtos.Authentication;
+using Proy.Domain.Models.Authentication;
 using Proy.Infrastructure.DataBase.EntityFramework.Entities.Authentication;
 
 namespace Proy.Infrastructure.DataBase.EntityFramework.Extensions.Authentication;
@@ -26,6 +27,18 @@ public static class UserExtencion
             user.PasswordHash,
             user.Email,
             user.IsActive
+        );
+    }
+    
+    public static UserDetailDto ToDetailDto(this UserEntity user)
+    {
+        return new UserDetailDto
+        (
+            user.Id,
+            user.Username,
+            user.Email,
+            user.IsActive,
+            user.CreatedAt
         );
     }
 }
