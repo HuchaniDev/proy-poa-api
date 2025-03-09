@@ -75,6 +75,15 @@ public class UserRepository: GenericRepository<UserEntity>,IUserRepository
         return Task.FromResult(user?.ToModel());
     }
 
+    public Task<List<string>> GetRolesAsync(int UserId)
+    {
+        var roles = _dbContext.UserRoles
+            .Where(x => x.UserId == UserId)
+            .Select(x => x.Role.Name)
+            .ToList();
+        return Task.FromResult(roles);
+    }
+
     public Task<bool> ChangeStatusActiveAsync(int id, bool status)
     {
         var user = _dbContext.Users.FirstOrDefault(x => x.Id == id);

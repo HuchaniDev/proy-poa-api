@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Proy.Application.Services.Authentication;
 using Proy.Domain.Models.Authentication;
 
@@ -17,14 +18,9 @@ public static class UserEndpoints
         {
             var result = await userService.GetAllAsync();
             return Results.Json(result,statusCode:(int)result.StatusCode);
-        });
+        })
+        .RequireAuthorization(new AuthorizeAttribute{Roles = "Admin"});
         
-        // app.MapGet("/{id}", async (UserService userService, int id) =>
-        // {
-        //     var user = await userService.GetUserAsync(id);
-        //     return user is null ? Results.NotFound() : Results.Ok(user);
-        // });
-        //
         app.MapPost("/", async (UserService userService, UserModel user) =>
         {
             var result = await userService.SaveUserAsync(user);

@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Text.RegularExpressions;
 using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 using Proy.Application.Services.Security;
 using Proy.Domain.Dtos.Authentication;
 using Proy.Domain.Models.Authentication;
