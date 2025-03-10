@@ -69,9 +69,16 @@ public class UserRepository: GenericRepository<UserEntity>,IUserRepository
         return Task.FromResult(user?.ToModel());
     }
 
-    public Task<UserRolesPermission?> GetByUsername(string username)
+    public Task<int> IsUsedUsername(string username)
+    {
+        var isUsed = _dbContext.Users.Count(u => u.Username == username);
+        return Task.FromResult(isUsed);
+    }
+
+    public Task<UserRolesPermission?> GetPermissionsByUsername(string username)
     {
         var user = _dbContext.Users
+            .AsNoTracking()
             .Select(u => new UserRolesPermission(
                 u.Id,
                 u.Username,

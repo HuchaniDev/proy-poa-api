@@ -39,7 +39,7 @@ public class AuthorizationMiddleware
         // 🔹 Obtener usuario, roles y permisos desde la base de datos
         using var scope = _serviceScopeFactory.CreateScope();
         var _userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
-        var userRolesPermissions = await _userRepository.GetByUsername(username);
+        var userRolesPermissions = await _userRepository.GetPermissionsByUsername(username);
 
         if (userRolesPermissions == null)
         {

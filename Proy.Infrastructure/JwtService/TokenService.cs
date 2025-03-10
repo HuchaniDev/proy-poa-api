@@ -34,7 +34,7 @@ public class TokenService:ITokenService
             claims.Add(new Claim(ClaimTypes.Role, role));
         }
         
-        foreach (var permission in user.Roles)
+        foreach (var permission in user.Permissions)
         {
             claims.Add(new Claim("permission", permission));
         }
@@ -46,7 +46,7 @@ public class TokenService:ITokenService
             issuer: _configuration["JwtSettings:Issuer"],
             audience: _configuration["JwtSettings:Audience"],
             claims: claims,
-            expires: DateTime.Now.AddMinutes(Convert.ToDouble(_configuration["JwtSettings:ExpirationMinutes"])),
+            expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["JwtSettings:ExpirationMinutes"])),
             signingCredentials: credentials
         );
 

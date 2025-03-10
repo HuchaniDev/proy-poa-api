@@ -41,8 +41,8 @@ public class UserValidator : AbstractValidator<UserModel>
     }
     private async Task<bool> IsUniqueUsername(int userId, string username)
     {
-        var existingUser = await _userRepository.GetByUsername(username);
-        return existingUser == null?true: existingUser.Id == userId;
+        var existingUserId = await _userRepository.IsUsedUsername(username);
+        return existingUserId == null || existingUserId == userId;
     }
     
     private async Task<bool> UniqueEmail(int userId, string email, CancellationToken token)

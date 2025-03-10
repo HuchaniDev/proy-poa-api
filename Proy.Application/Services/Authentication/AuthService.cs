@@ -22,13 +22,18 @@ public class AuthService
 
     public async Task<Result<string>> AuthenticateAsync(LoginDto userAuth )
     {
-        var user = await _userRepository.GetByUsername(userAuth.UserName);
+        var user = await _userRepository.GetPermissionsByUsername(userAuth.Username);
+        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
         if (user == null || !_passwordHasher.VerifyPassword(user.PasswordHash, userAuth.Password))
         {
+            stopwatch.Stop();
+            Console.WriteLine($"Tiempo de hash: {stopwatch.ElapsedMilliseconds} ms");
+
             return Result<string>.Failure(new List<string> { "Credenciales inválidas" }, HttpStatusCode.Unauthorized);
         }
 
-        
+        stopwatch.Stop();
+        Console.WriteLine($"Tiempo de hash: {stopwatch.ElapsedMilliseconds} ms");
         //var roles = await _userRepository.GetRolesAsync(user.Id); 
         var token = _tokenService.GenerateToken(user);
         

@@ -39,5 +39,4 @@ public class Result<T>
         HttpStatusMessages.GetMessage((int)code),
         errors
     );
-    
 }

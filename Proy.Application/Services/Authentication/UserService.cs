@@ -30,9 +30,11 @@ public class UserService
         {
             if (user.Id == 0)
             {
+                var stopwatch = System.Diagnostics.Stopwatch.StartNew();
                 // Encriptar la contraseña antes de guardarla
                 user.PasswordHash = _passwordHasher.HashPassword(user.PasswordHash);
-                
+                stopwatch.Stop();
+                Console.WriteLine($"Tiempo de hash: {stopwatch.ElapsedMilliseconds} ms");
                 // Guardar el usuario con la contraseña encriptada
                 if ((await _userRepository.SaveAsync(user)) != null)
                     return Result<object>.Success(new { }, HttpStatusCode.Created);
