@@ -28,7 +28,8 @@ public static class UserEndpoints
         {
             var result = await userService.SaveUserAsync(user);
             return Results.Json(result,statusCode:(int)result.StatusCode);
-        });
+        })
+        .AllowAnonymous();
         
         app.MapPut("change-status/{id}", async ([FromBody]bool status, UserService userService, int id ) =>
         {

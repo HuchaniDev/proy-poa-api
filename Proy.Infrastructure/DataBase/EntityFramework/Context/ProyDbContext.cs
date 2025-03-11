@@ -2,6 +2,7 @@
 using Proy.Infrastructure.DataBase.EntityFramework.Context.Authentication;
 using Proy.Infrastructure.DataBase.EntityFramework.Entities;
 using Proy.Infrastructure.DataBase.EntityFramework.Entities.Authentication;
+using Proy.Infrastructure.DataBase.EntityFramework.Entities.StrategicAxis;
 
 namespace Proy.Infrastructure.DataBase.EntityFramework.Context;
 
@@ -14,6 +15,10 @@ public class ProyDbContext:DbContext
     public DbSet<PermissionEntity> Permissions { get; set; }
     public DbSet<UserRoleEntity> UserRoles { get; set; }
     public DbSet<RolePermissionEntity> RolePermissions { get; set; }
+    
+    public DbSet<StrategicAxisEntity> StrategicAxis { get; set; }
+    public DbSet<StrategicLineEntity> StrategicLines { get; set; }
+    public DbSet<StrategicActionEntity> StrategicActions { get; set; }
     
     public ProyDbContext(DbContextOptions<ProyDbContext> options):base(options){}
 

@@ -1,0 +1,49 @@
+﻿using Proy.Domain.Models.StrategicAxis;
+using Proy.Domain.Repositories.StrategicAxis;
+using Proy.Infrastructure.DataBase.EntityFramework.Context;
+using Proy.Infrastructure.DataBase.EntityFramework.Entities.StrategicAxis;
+using Proy.Infrastructure.DataBase.EntityFramework.Extensions.StrategicAxis;
+using Proy.Infrastructure.DataBase.EntityFramework.Repositories.Common;
+
+namespace Proy.Infrastructure.DataBase.EntityFramework.Repositories.StrategicAxis;
+
+public class StrategicAxisRepository:GenericRepository<StrategicAxisEntity>, IStrategicAxisRepository
+{
+    private readonly ProyDbContext _dbContext;
+    public StrategicAxisRepository(ProyDbContext dbContext) : base(dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public async Task<StrategicAxisModel?> SaveAsync(StrategicAxisModel model)
+    {
+        try
+        {
+            if (model.Id == 0)
+            {
+                var newEntity = await base.SaveAsync(model.ToEntity());
+                return newEntity.ToModel();
+            }
+            var entity = model.ToEntity();
+            var updatedEntity = await base.UpdateAsync(entity);
+            return updatedEntity.ToModel();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+    }
+
+    public async Task<StrategicAxisModel?> GetByIdAsync(int id)
+    {
+        var entity = await base.GetByIdAsync(id);
+        return entity.ToModel();
+    }
+
+    public Task<List<StrategicAxisModel>> GetAllAsync()
+    {
+        var entities = _dbContext.StrategicAxis.Select(sax=>sax.ToModel()).ToList();
+        return Task.FromResult(entities);
+    }
+}
