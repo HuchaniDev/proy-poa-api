@@ -25,7 +25,7 @@ public class StrategicAxisRepository:GenericRepository<StrategicAxisEntity>, ISt
                 return newEntity.ToModel();
             }
             var entity = model.ToEntity();
-            var updatedEntity = await base.UpdateAsync(entity);
+            var updatedEntity = await UpdateAsync(entity);
             return updatedEntity.ToModel();
         }
         catch (Exception e)
@@ -38,6 +38,8 @@ public class StrategicAxisRepository:GenericRepository<StrategicAxisEntity>, ISt
     public async Task<StrategicAxisModel?> GetByIdAsync(int id)
     {
         var entity = await base.GetByIdAsync(id);
+        if(entity == null) return null;
+        
         return entity.ToModel();
     }
 
