@@ -34,7 +34,11 @@ public class AuthService
 
         stopwatch.Stop();
         Console.WriteLine($"Tiempo de hash: {stopwatch.ElapsedMilliseconds} ms");
-        //var roles = await _userRepository.GetRolesAsync(user.Id); 
+        
+        if (user.Roles.Count==0)
+        {
+            return Result<string>.Failure(new List<string> {"Te conocemos pero no tienes poder"}, HttpStatusCode.Unauthorized);
+        }
         var token = _tokenService.GenerateToken(user);
         
         return Result<string>.Success(token, HttpStatusCode.OK);

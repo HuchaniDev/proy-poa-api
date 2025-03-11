@@ -78,7 +78,7 @@ public class UserRepository: GenericRepository<UserEntity>,IUserRepository
     public Task<UserRolesPermission?> GetPermissionsByUsername(string username)
     {
         var user = _dbContext.Users
-            .AsNoTracking()
+            .Where(u => u.Username == username)
             .Select(u => new UserRolesPermission(
                 u.Id,
                 u.Username,
