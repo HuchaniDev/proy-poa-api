@@ -3,3 +3,30 @@ obj/
 /packages/
 riderModule.iml
 /_ReSharper.Caches/
+
+# 🚀 Archivos y carpetas de Rider
+.idea/
+*.sln.iml
+
+# 🚀 Archivos de compilación de .NET
+bin/
+obj/
+*.pdb
+
+# 🚀 Configuración de entorno
+.env
+.env.local
+.env.*.local
+
+# 🚀 Dependencias de Node.js (si tienes Angular en el frontend)
+node_modules/
+dist/
+package-lock.json
+
+# 🚀 Migraciones de Entity Framework (Opcional)
+migrations/
+Migrations/
+
+# 🚀 Archivos de usuario de VS Code (si trabajas con ambos IDEs)
+.vscode/
+
