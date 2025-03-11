@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Proy.Infrastructure.DataBase.EntityFramework.Context;
 
@@ -11,9 +12,11 @@ using Proy.Infrastructure.DataBase.EntityFramework.Context;
 namespace Proy.Infrastructure.Database.EntityFramework.migrations
 {
     [DbContext(typeof(ProyDbContext))]
-    partial class ProyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250311190406_add strategicAxis")]
+    partial class addstrategicAxis
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
