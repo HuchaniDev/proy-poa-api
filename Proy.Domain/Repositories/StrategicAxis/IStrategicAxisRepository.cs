@@ -6,4 +6,5 @@ namespace Proy.Domain.Repositories.StrategicAxis;
 public interface IStrategicAxisRepository:IGenericRepository<StrategicAxisModel>
 {
     Task<List<StrategicAxisModel>>GetAllAsync();
+    Task<List<StrategicAxisModel>>GetByDescriptionAsync(string text);
 }

@@ -31,6 +31,15 @@ public static class StrategicAxisEndpoints
             }
         );
 
+        routes.MapGet(
+            "/by-description/{text}",
+            (string text, StrategicAxisService strategicAxisService) =>
+            {
+                var result = strategicAxisService.GetByDescription(text).Result;
+                return Results.Json(result, statusCode: (int)result.StatusCode);
+            }
+        );
+
         routes.MapPost(
             "/",
             (StrategicAxisModel model, StrategicAxisService strategicAxisService) =>

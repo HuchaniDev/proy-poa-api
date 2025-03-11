@@ -37,6 +37,12 @@ public class StrategicAxisService
         return Result<StrategicAxisModel>.Success(strategicAxis, HttpStatusCode.OK);
     }
     
+    public async Task<Result<List<StrategicAxisModel>>> GetByDescription(string text)
+    {
+        var strategicAxis = await _strategicAxisRepository.GetByDescriptionAsync(text);
+        return Result<List<StrategicAxisModel>>.Success(strategicAxis, HttpStatusCode.OK);
+    }
+    
     public async Task<Result<bool>> Delete(int id)
     {
         if (await _strategicAxisRepository.DeleteHardAsync(id))

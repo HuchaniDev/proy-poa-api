@@ -48,4 +48,11 @@ public class StrategicAxisRepository:GenericRepository<StrategicAxisEntity>, ISt
         var entities = _dbContext.StrategicAxis.Select(sax=>sax.ToModel()).ToList();
         return Task.FromResult(entities);
     }
+
+    public Task<List<StrategicAxisModel>> GetByDescriptionAsync(string text)
+    {
+        var query = _dbContext.StrategicAxis.Where(sax => sax.Description.Contains(text));
+        var entities = query.Select(sax => sax.ToModel()).ToList();
+        return Task.FromResult(entities);
+    }
 }
