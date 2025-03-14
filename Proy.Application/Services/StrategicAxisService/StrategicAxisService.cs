@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using FluentValidation;
 using Proy.Domain.Models.StrategicAxis;
 using Proy.Domain.Repositories.StrategicAxis;
 using Proy.Domain.Responses;
@@ -8,14 +9,23 @@ namespace Proy.Application.Services;
 public class StrategicAxisService
 {
     private readonly IStrategicAxisRepository _strategicAxisRepository;
+    private readonly IValidator<StrategicAxisModel> _validator;
 
-    public StrategicAxisService(IStrategicAxisRepository strategicAxisRepository)
+    public StrategicAxisService(
+        IStrategicAxisRepository strategicAxisRepository,
+        IValidator<StrategicAxisModel> validator
+        )
     {
         _strategicAxisRepository = strategicAxisRepository;
+        _validator = validator;
     }
     
     public async Task<Result<object>> Save(StrategicAxisModel model)
     {
+        var strategicAxisValid = _validator.Validate(model);
+        if (!strategicAxisValid.IsValid)
+            return Result<object>.Failure(strategicAxisValid.Errors.Select(x => x.ErrorMessage).ToList(), HttpStatusCode.BadRequest);
+
         var isCreated = (await _strategicAxisRepository.SaveAsync(model)) != null;
         return Result<object>.Success(new{}, HttpStatusCode.Created);
     }
@@ -24,7 +34,6 @@ public class StrategicAxisService
     {
         var strategicAxis = await _strategicAxisRepository.GetAllAsync();
         return Result<List<StrategicAxisModel>>.Success(strategicAxis, HttpStatusCode.OK);
-
     }
     
     public async Task<Result<StrategicAxisModel>> GetById(int id)
@@ -36,13 +45,13 @@ public class StrategicAxisService
         }
         return Result<StrategicAxisModel>.Success(strategicAxis, HttpStatusCode.OK);
     }
-    
+
     public async Task<Result<List<StrategicAxisModel>>> GetByDescription(string text)
     {
         var strategicAxis = await _strategicAxisRepository.GetByDescriptionAsync(text);
         return Result<List<StrategicAxisModel>>.Success(strategicAxis, HttpStatusCode.OK);
     }
-    
+
     public async Task<Result<bool>> Delete(int id)
     {
         if (await _strategicAxisRepository.DeleteHardAsync(id))

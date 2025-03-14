@@ -58,13 +58,13 @@ app.UseSwaggerUI(c =>
     c.EnableFilter();
 });
 
-app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 app.UseCors("CORSPolicy");
 app.UseMiddleware<MiddlewareException>();
 app.UseMiddleware<NotFoundMiddleware>();
-app.UseMiddleware<AuthorizationMiddleware>();
+//app.UseMiddleware<AuthorizationMiddleware>();
 
 
 //
