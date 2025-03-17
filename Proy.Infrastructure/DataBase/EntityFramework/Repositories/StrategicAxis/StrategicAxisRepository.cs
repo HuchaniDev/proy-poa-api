@@ -1,4 +1,5 @@
-﻿using Proy.Domain.Models.StrategicAxis;
+﻿using Microsoft.EntityFrameworkCore;
+using Proy.Domain.Models.StrategicAxis;
 using Proy.Domain.Repositories.StrategicAxis;
 using Proy.Infrastructure.DataBase.EntityFramework.Context;
 using Proy.Infrastructure.DataBase.EntityFramework.Entities.StrategicAxis;
@@ -54,7 +55,7 @@ public class StrategicAxisRepository:GenericRepository<StrategicAxisEntity>, ISt
 
     public async Task<StrategicAxisModel?> GetByCodeAsync(int code)
     {
-        var strategicAxis = _dbContext.StrategicAxis.Where(sa=>sa.Code == code).FirstOrDefault();
+        var strategicAxis = _dbContext.StrategicAxis.AsNoTracking().Where(sa=>sa.Code == code).FirstOrDefault();
         return strategicAxis?.ToModel();
     }
 }

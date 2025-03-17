@@ -22,7 +22,7 @@ public class StrategicAxisService
     
     public async Task<Result<object>> Save(StrategicAxisModel model)
     {
-        var strategicAxisValid = _validator.Validate(model);
+        var strategicAxisValid = await _validator.ValidateAsync(model);
         if (!strategicAxisValid.IsValid)
             return Result<object>.Failure(strategicAxisValid.Errors.Select(x => x.ErrorMessage).ToList(), HttpStatusCode.BadRequest);
 

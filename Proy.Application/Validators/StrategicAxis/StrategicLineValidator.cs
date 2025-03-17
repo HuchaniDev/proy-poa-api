@@ -22,7 +22,7 @@ public class StrategicLineValidator:AbstractValidator<StrategicLineRequestDto>
             .MaximumLength(MaxNameLength).WithMessage($"El nombre debe tener un máximo de {MaxNameLength} caracteres");
         
         RuleFor(x =>x.StrategicAxisId)
-            .MustAsync(async (StrategicAxisId, cancellation) => await ExistStrategicAxis(StrategicAxisId, cancellation)) 
+            .MustAsync(async (strategicAxisId, cancellation) => await ExistStrategicAxis(strategicAxisId, cancellation)) 
             .WithMessage("El eje estratégico no existe");
     }
     

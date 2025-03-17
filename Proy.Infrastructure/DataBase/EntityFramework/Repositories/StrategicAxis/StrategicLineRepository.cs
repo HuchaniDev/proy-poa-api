@@ -1,4 +1,5 @@
-﻿using Proy.Domain.Dtos.StrategicAxis;
+﻿using Microsoft.EntityFrameworkCore;
+using Proy.Domain.Dtos.StrategicAxis;
 using Proy.Domain.Repositories.StrategicAxis;
 using Proy.Infrastructure.DataBase.EntityFramework.Context;
 using Proy.Infrastructure.DataBase.EntityFramework.Entities.StrategicAxis;
@@ -40,8 +41,7 @@ public class StrategicLineRepository:GenericRepository<StrategicLineEntity>,IStr
 
     public async Task<List<StrategicLineRequestDto>> GetAllByStrategicAxisId(int strategicAxisId)
     {
-        var query = _dbContext.StrategicLines.Where(sax => sax.StrategicAxisId == strategicAxisId);
-
+        var query = _dbContext.StrategicLines. AsNoTracking().Where(sax => sax.StrategicAxisId == strategicAxisId);
         return query.Select(sax => sax.ToDto()).ToList();
     }
 }

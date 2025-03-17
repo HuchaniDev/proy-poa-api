@@ -20,7 +20,7 @@ public class StrategicLineService
     
     public async Task<Result<object>> Save(StrategicLineRequestDto model)
     {
-        var strategicLineValid = _validator.Validate(model);
+        var strategicLineValid = await _validator.ValidateAsync(model);
         if (!strategicLineValid.IsValid)
             return Result<object>.Failure(strategicLineValid.Errors.Select(x => x.ErrorMessage).ToList(), HttpStatusCode.BadRequest);
 
