@@ -79,5 +79,6 @@ app.MapUserEndpoints();
 app.MapAuthEndpoints();
 app.MapStrategicAxisEndpoints();
 app.MapStrategicLineEndpoints();
+app.MapStrategicActionEndpoints();
 
 app.Run();

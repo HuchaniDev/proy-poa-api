@@ -52,6 +52,7 @@ public static class ProjectDi
 
         collection.AddTransient<StrategicAxisService>();
         collection.AddTransient<StrategicLineService>();
+        collection.AddTransient<StrategicActionService>();
         return collection;
     }
     
@@ -60,6 +61,7 @@ public static class ProjectDi
         collection.AddTransient<IUserRepository, UserRepository>();
         collection.AddTransient<IStrategicAxisRepository, StrategicAxisRepository>();
         collection.AddTransient<IStrategicLineRepository, StrategicLineRepository>();
+        collection.AddTransient<IStrategicActionRepository, StrategicActionRepository>();
         return collection;
     }
 }

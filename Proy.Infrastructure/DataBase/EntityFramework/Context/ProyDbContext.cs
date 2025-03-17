@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Proy.Infrastructure.DataBase.EntityFramework.Context.Authentication;
+using Proy.Infrastructure.DataBase.EntityFramework.Context.strategicAxis;
 using Proy.Infrastructure.DataBase.EntityFramework.Entities;
 using Proy.Infrastructure.DataBase.EntityFramework.Entities.Authentication;
 using Proy.Infrastructure.DataBase.EntityFramework.Entities.StrategicAxis;
@@ -27,6 +28,8 @@ public class ProyDbContext:DbContext
         builder.ApplyConfiguration(new UserConfiguration());
         builder.ApplyConfiguration(new UserRoleConfiguration());
         builder.ApplyConfiguration(new RolePermissionConfiguration());
+
+        builder.ApplyConfiguration(new strategicLineConfigurations());
         
         base.OnModelCreating(builder);
     }
