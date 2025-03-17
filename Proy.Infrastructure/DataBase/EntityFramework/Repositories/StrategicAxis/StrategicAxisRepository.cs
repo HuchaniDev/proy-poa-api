@@ -9,11 +9,7 @@ namespace Proy.Infrastructure.DataBase.EntityFramework.Repositories.StrategicAxi
 
 public class StrategicAxisRepository:GenericRepository<StrategicAxisEntity>, IStrategicAxisRepository
 {
-    private readonly ProyDbContext _dbContext;
-    public StrategicAxisRepository(ProyDbContext dbContext) : base(dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    public StrategicAxisRepository(ProyDbContext dbContext) : base(dbContext) {}
 
     public async Task<StrategicAxisModel?> SaveAsync(StrategicAxisModel model)
     {
