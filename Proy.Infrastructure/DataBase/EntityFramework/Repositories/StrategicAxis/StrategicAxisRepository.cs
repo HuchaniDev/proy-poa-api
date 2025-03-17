@@ -51,4 +51,10 @@ public class StrategicAxisRepository:GenericRepository<StrategicAxisEntity>, ISt
         var entities = query.Select(sax => sax.ToModel()).ToList();
         return Task.FromResult(entities);
     }
+
+    public async Task<StrategicAxisModel?> GetByCodeAsync(int code)
+    {
+        var strategicAxis = _dbContext.StrategicAxis.Where(sa=>sa.Code == code).FirstOrDefault();
+        return strategicAxis?.ToModel();
+    }
 }

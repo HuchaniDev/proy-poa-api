@@ -8,7 +8,7 @@ public static class StrategicAxisEndpoints
 {
     internal static void MapStrategicAxisEndpoints(this WebApplication WebApp)
     {
-        WebApp.MapGroup("/strategic-axis").WithTags("POA - Ejes").MapGroupStrategicAxis();
+        WebApp.MapGroup("/strategic-axis").WithTags("Ejes - estrategicos").MapGroupStrategicAxis();
     }
     
     internal static void MapGroupStrategicAxis(this RouteGroupBuilder routes)

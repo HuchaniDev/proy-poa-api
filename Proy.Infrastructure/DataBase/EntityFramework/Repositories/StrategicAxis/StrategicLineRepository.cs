@@ -9,7 +9,7 @@ namespace Proy.Infrastructure.DataBase.EntityFramework.Repositories.StrategicAxi
 
 public class StrategicLineRepository:GenericRepository<StrategicLineEntity>,IStrategicLineRepository
 {
-    protected StrategicLineRepository(ProyDbContext dbContext) : base(dbContext)
+    public StrategicLineRepository(ProyDbContext dbContext) : base(dbContext)
     {
     }
 
@@ -32,9 +32,10 @@ public class StrategicLineRepository:GenericRepository<StrategicLineEntity>,IStr
         }
     }
 
-    public Task<StrategicLineRequestDto?> GetByIdAsync(int id)
+    public async Task<StrategicLineRequestDto?> GetByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var strategicLine = await base.GetByIdAsync(id);
+        return strategicLine?.ToDto();
     }
 
     public async Task<List<StrategicLineRequestDto>> GetAllByStrategicAxisId(int strategicAxisId)

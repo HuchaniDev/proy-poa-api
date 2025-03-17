@@ -78,5 +78,6 @@ app.UseMiddleware<NotFoundMiddleware>();
 app.MapUserEndpoints();
 app.MapAuthEndpoints();
 app.MapStrategicAxisEndpoints();
+app.MapStrategicLineEndpoints();
 
 app.Run();

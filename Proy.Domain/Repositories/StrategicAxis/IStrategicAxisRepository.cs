@@ -7,4 +7,6 @@ public interface IStrategicAxisRepository:IGenericRepository<StrategicAxisModel>
 {
     Task<List<StrategicAxisModel>>GetAllAsync();
     Task<List<StrategicAxisModel>>GetByDescriptionAsync(string text);
+    
+    Task<StrategicAxisModel?>GetByCodeAsync(int code);
 }

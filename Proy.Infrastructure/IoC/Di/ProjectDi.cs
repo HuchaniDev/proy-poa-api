@@ -51,6 +51,7 @@ public static class ProjectDi
         collection.AddScoped<AuthService>();
 
         collection.AddTransient<StrategicAxisService>();
+        collection.AddTransient<StrategicLineService>();
         return collection;
     }
     
@@ -58,6 +59,7 @@ public static class ProjectDi
     {
         collection.AddTransient<IUserRepository, UserRepository>();
         collection.AddTransient<IStrategicAxisRepository, StrategicAxisRepository>();
+        collection.AddTransient<IStrategicLineRepository, StrategicLineRepository>();
         return collection;
     }
 }

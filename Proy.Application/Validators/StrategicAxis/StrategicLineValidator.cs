@@ -22,11 +22,11 @@ public class StrategicLineValidator:AbstractValidator<StrategicLineRequestDto>
             .MaximumLength(MaxNameLength).WithMessage($"El nombre debe tener un máximo de {MaxNameLength} caracteres");
         
         RuleFor(x =>x.StrategicAxisId)
-            .MustAsync(async (StrategicAxisId, cancellation) => await ExistStrategicAxis(StrategicAxisId)) 
+            .MustAsync(async (StrategicAxisId, cancellation) => await ExistStrategicAxis(StrategicAxisId, cancellation)) 
             .WithMessage("El eje estratégico no existe");
     }
     
-    private async Task<bool> ExistStrategicAxis(int strategicAxisId)
+    private async Task<bool> ExistStrategicAxis(int strategicAxisId, CancellationToken token)
     {
         return await _strategicAxisRepository.ExistsByIdAsync(strategicAxisId);
     }
